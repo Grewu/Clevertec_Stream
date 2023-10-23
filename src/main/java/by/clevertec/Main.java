@@ -9,7 +9,11 @@ import by.clevertec.model.Person;
 import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -40,7 +44,17 @@ public class Main {
 
     public static void task1() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        int zooCount = 3;
+        int animalsPerZoo = 7;
+
+        List<Animal> animalsForZoo3 = animals.stream()
+                .filter(animal -> animal.getAge() >= 10 && animal.getAge() <= 20)
+                .sorted(Comparator.comparingInt(Animal::getAge))
+                .skip(zooCount * animalsPerZoo)
+                .limit(animalsPerZoo)
+                .toList();
+
+        animalsForZoo3.forEach(animal -> System.out.println(animal.getBread() + " - " + animal.getAge() + " years old"));
     }
 
     public static void task2() {
