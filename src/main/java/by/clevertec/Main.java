@@ -59,7 +59,13 @@ public class Main {
 
     public static void task2() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        List<String> femaleJapaneseBreeds = animals.stream()
+                .filter(animal -> "Japanese".equalsIgnoreCase(animal.getOrigin()))
+                .filter(animal -> "Female".equalsIgnoreCase(animal.getGender()))
+                .map(animal -> animal.getBread().toUpperCase())
+                .toList();
+
+        femaleJapaneseBreeds.forEach(System.out::println);
     }
 
     public static void task3() {
