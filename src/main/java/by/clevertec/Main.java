@@ -114,7 +114,13 @@ public class Main {
 
     public static void task8() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        int maxAge = animals.stream()
+                .sorted(Comparator.comparingInt(Animal::getAge).reversed())
+                .limit(100)
+                .findFirst()
+                .map(Animal::getAge)
+                .orElse(-1);
+        System.out.println(maxAge);
     }
 
     public static void task9() {
