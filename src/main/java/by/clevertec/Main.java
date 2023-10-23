@@ -99,7 +99,10 @@ public class Main {
 
     public static void task6() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        boolean allMaleAndFemale = animals.stream()
+                .allMatch(animal -> "Male".equalsIgnoreCase(animal.getGender())
+                        || "Female".equalsIgnoreCase(animal.getGender()));
+        System.out.println(allMaleAndFemale);
     }
 
     public static void task7() {
