@@ -91,7 +91,10 @@ public class Main {
 
     public static void task5() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        boolean hasHungarianAnimal = animals.stream()
+                .filter(animal -> animal.getAge() >= 20 && animal.getAge() <= 30)
+                .anyMatch(animal -> "Hungarian".equalsIgnoreCase(animal.getOrigin()));
+        System.out.println(hasHungarianAnimal);
     }
 
     public static void task6() {
