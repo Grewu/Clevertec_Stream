@@ -12,6 +12,7 @@ import by.clevertec.util.Util;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -208,7 +209,12 @@ public class Main {
 
     public static void task21() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        Map<String, Long> studentsInEachGroup = students.stream()
+                .collect(Collectors.groupingBy(Student::getGroup, Collectors.counting()));
+
+        studentsInEachGroup.forEach((group, count) -> {
+            System.out.println("Группа: " + group + " - Количество студентов: " + count);
+        });
     }
 
     public static void task22() {
