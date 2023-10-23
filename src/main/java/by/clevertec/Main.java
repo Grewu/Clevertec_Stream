@@ -9,10 +9,10 @@ import by.clevertec.model.Person;
 import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
-import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -144,7 +144,11 @@ public class Main {
 
     public static void task11() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        OptionalDouble averageAge = animals.stream()
+                .filter(animal -> "Indonesian".equalsIgnoreCase(animal.getOrigin()))
+                .mapToInt(Animal::getAge)
+                .average();
+        System.out.println(averageAge);
     }
 
     public static void task12() {
