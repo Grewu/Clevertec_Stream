@@ -70,7 +70,14 @@ public class Main {
 
     public static void task3() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        List<String> countriesStartingWithA = animals.stream()
+                .filter(animal -> animal.getAge() > 30)
+                .map(Animal::getOrigin)
+                .filter(country -> country.startsWith("A"))
+                .distinct()
+                .toList();
+
+        countriesStartingWithA.forEach(System.out::println);
     }
 
     public static void task4() {
