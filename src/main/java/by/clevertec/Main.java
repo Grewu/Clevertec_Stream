@@ -219,6 +219,17 @@ public class Main {
 
     public static void task22() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        Map<String, Integer> minAgeByFaculty = students.stream()
+                .collect(Collectors.groupingBy(
+                        Student::getFaculty,
+                        Collectors.collectingAndThen(
+                                Collectors.minBy(Comparator.comparingInt(Student::getAge)),
+                                studentOptional -> studentOptional.map(Student::getAge).orElse(0)
+                        )
+                ));
+
+        minAgeByFaculty.forEach((faculty, minAge) -> {
+            System.out.println("Факультет: " + faculty + " - Минимальный возраст: " + minAge);
+        });
     }
 }
