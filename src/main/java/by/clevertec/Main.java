@@ -230,7 +230,19 @@ public class Main {
 
     public static void task20() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        List<Examination> examinations = Util.getExaminations();
+       students.stream()
+                        .collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingDouble(
+                           student -> examinations.stream()
+                                   .filter(examination -> examination.getStudentId() == student.getId())
+                                   .mapToInt(Examination::getExam1)
+                                   .findFirst()
+                                   .orElse(0)
+                        )))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByKey())
+                        .stream().collect(Collectors.toSet())
+                        .forEach(stringDoubleEntry -> System.out.printf(" %s = %.2f \n" ,stringDoubleEntry.getKey(), stringDoubleEntry.getValue()));
     }
 
     public static void task21() {
