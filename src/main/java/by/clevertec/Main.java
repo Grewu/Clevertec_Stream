@@ -240,9 +240,10 @@ public class Main {
                                    .orElse(0)
                         )))
                 .entrySet().stream()
-                .max(Map.Entry.comparingByKey())
+                .max(Map.Entry.comparingByValue())
                         .stream().collect(Collectors.toSet())
-                        .forEach(stringDoubleEntry -> System.out.printf(" %s = %.2f \n" ,stringDoubleEntry.getKey(), stringDoubleEntry.getValue()));
+                        .forEach(stringDoubleEntry -> System.out.printf(" %s = %.2f \n" ,stringDoubleEntry.getKey(),
+                                                                                      stringDoubleEntry.getValue()));
     }
 
     public static void task21() {
