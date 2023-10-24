@@ -194,11 +194,21 @@ public class Main {
     public static void task18() {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
-//        students.stream() Продолжить ...
+
+        List<Student> result = students.stream()
+                .filter(student -> "P-1".equalsIgnoreCase(student.getGroup()))
+                .filter(student -> examinations.stream()
+                        .filter(examination -> examination.getStudentId() == student.getId())
+                        .allMatch(exam -> exam.getExam1() + exam.getExam2() + exam.getExam3() > 4))
+                .toList();
+
+        result.forEach(student -> System.out.println(student.getSurname()));
+
     }
 
     public static void task19() {
         List<Student> students = Util.getStudents();
+        List<Examination> examinations = Util.getExaminations();
 //        students.stream() Продолжить ...
     }
 
