@@ -217,8 +217,15 @@ public class Main {
 
     public static void task18() {
         List<Student> students = Util.getStudents();
-        List<Examination> examinations = Util.getExaminations();
-//        students.stream() Продолжить ...
+        Map<String, Double> result = students.stream()
+                .collect(Collectors.groupingBy(
+                        Student::getFaculty,
+                        Collectors.averagingDouble(Student::getAge)
+                ));
+
+        result.forEach((faculty, averageAge) -> {
+            System.out.println(System.out.printf("Факультет: %s, Средний возраст: %.2f%n", faculty, averageAge));
+        });
     }
 
     public static void task20() {
