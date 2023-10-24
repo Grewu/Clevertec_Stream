@@ -10,6 +10,7 @@ import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -155,7 +156,15 @@ public class Main {
 
     public static void task12() {
         List<Person> persons = Util.getPersons();
-//        persons.stream() Продолжить ...
+        List<Person> collect = persons.stream()
+                .filter(person -> "Male".equalsIgnoreCase(person.getGender()))
+                .filter(person -> person.getDateOfBirth().isBefore(LocalDate.now().minusYears(18)) &&
+                        person.getDateOfBirth().isAfter(LocalDate.now().minusYears(27)))
+                .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
+                .limit(200)
+                .toList();
+
+        collect.forEach(System.out::println);
     }
 
     public static void task13() {
@@ -191,7 +200,7 @@ public class Main {
                 .forEach(System.out::println);
     }
 
-    public static void task18() {
+    public static void task19() {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
 
@@ -206,7 +215,7 @@ public class Main {
 
     }
 
-    public static void task19() {
+    public static void task18() {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
 //        students.stream() Продолжить ...
