@@ -10,10 +10,7 @@ import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -179,12 +176,37 @@ public class Main {
 
     public static void task14() {
         List<Car> cars = Util.getCars();
-//        cars.stream() Продолжить ...
+        double transportCostPerTon = 7.14;
+
+        Map<String, Double> countryTransportCosts = new HashMap<>();
+
+        Arrays.asList("Туркменистан", "Узбекистан", "Казахстан", "Кыргызстан", "Россия", "Монголия").forEach(country -> {
+            double cost = cars.stream()
+                    .filter(car -> (car.getCarMake().equals("Jaguar") && car.getColor().equals("White"))
+                            || (Arrays.asList("BMW", "Lexus", "Chrysler", "Toyota").contains(car.getCarMake()) && car.getMass() <= 1500)
+                            || (car.getColor().equals("Black") && car.getMass() > 4000) || (Arrays.asList("GMC", "Dodge").contains(car.getCarMake()))
+                            || (car.getReleaseYear() <= 1982 || car.getCarModel().equals("Civic") || car.getCarModel().equals("Cherokee"))
+                            || (!Arrays.asList("Yellow", "Red", "Green", "Blue").contains(car.getColor()) || car.getPrice() > 40000)
+                            || car.getVin().contains("59"))
+                    .mapToDouble(Car::getMass)
+                    .sum() * transportCostPerTon;
+
+            countryTransportCosts.put(country, cost);
+        });
+
+        countryTransportCosts.forEach((country, cost) -> System.out.println("Стоимость транспортировки в " + country + ": $" + cost));
+
+        System.out.println("Общая стоимость транспортировки: $" + countryTransportCosts.values().stream().mapToDouble(Double::doubleValue).sum());
     }
 
     public static void task15() {
         List<Flower> flowers = Util.getFlowers();
-//        flowers.stream() Продолжить ...
+        List<Flower> highWaterConsumptionFlowers = flowers.stream()
+                .filter(flower -> flower.getWaterConsumptionPerDay() > 0.2)
+                .toList();
+
+        highWaterConsumptionFlowers.forEach(flower -> System.out.println("Растение: " + flower.getCommonName() +
+                ", Водопотребление: " + flower.getWaterConsumptionPerDay() + " литров в день"));
     }
 
     public static void task16() {
