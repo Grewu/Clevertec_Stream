@@ -9,13 +9,11 @@ import by.clevertec.model.Person;
 import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
-
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -169,7 +167,14 @@ public class Main {
 
     public static void task13() {
         List<House> houses = Util.getHouses();
-//        houses.stream() Продолжить ...
+        List<Person> evacuatedPeople = houses.stream()
+                .flatMap(house -> house.getPersonList().stream())
+                .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
+                .sorted(Comparator.comparing(person -> person.getDateOfBirth().getYear()))
+                .limit(500)
+                .toList();
+        System.out.println("Люди для первого этапа эвакуации:");
+        evacuatedPeople.forEach(person -> System.out.println(person.getFirstName() + " " + person.getLastName()));
     }
 
     public static void task14() {
@@ -232,7 +237,7 @@ public class Main {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
        students.stream()
-                        .collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingDouble(
+                        .collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingInt(
                            student -> examinations.stream()
                                    .filter(examination -> examination.getStudentId() == student.getId())
                                    .mapToInt(Examination::getExam1)
